@@ -14,7 +14,7 @@ import { GetServices } from "../pages/public/GetServices.jsx";
 import { LoginPage } from "../pages/admin/LoginPage.jsx";
 import { DashboardPage } from "../pages/admin/DashboardPage.jsx";
 import { PendingActivationPage } from "../pages/admin/PendingActivationPage.jsx";
-import { AgentPage } from "../pages/admin/AgentPage.jsx";
+
 import { ClientPage } from "../pages/admin/ClientsPage.jsx";
 import { MailboxConfigPage } from "../pages/admin/MailboxConfigPage.jsx";
 import { LogsPage } from "../pages/admin/LogsPage.jsx";
