@@ -6,7 +6,7 @@ export const CodesAdmin = () => {
 
   const [platform, setPlatform] = useState("Netflix");
   const [code, setCode] = useState("");
-  const [status, setStatus] = useState("activo");
+  const [status, setStatus] = useState("Disponible");
   const [message, setMessage] = useState(null);
 
   const handleSubmit = (e) => {
@@ -75,19 +75,7 @@ export const CodesAdmin = () => {
           />
         </div>
 
-        {/* ESTADO */}
-        <div className="flex flex-col text-left">
-          <label className="font-medium mb-1">Estado</label>
-          <select
-            className="border px-3 py-2 rounded-lg"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="activo">Activo</option>
-            <option value="inactivo">Inactivo</option>
-          </select>
-        </div>
-
+       
         {/* BOTÓN */}
         <button
           type="submit"
