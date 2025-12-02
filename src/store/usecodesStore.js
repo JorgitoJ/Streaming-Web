@@ -1,16 +1,22 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
-export const useCodesStore = create((set,get) => ({
-  codes: [], // lista de códigos {email, code, status}
+export const useCodesStore = create((set) => ({
+  codes: [],
 
-  addCode: (newCode) =>
-    set((state) => ({ codes: [...state.codes, newCode] })),
-
-  findCodeByEmail: (email) =>
-    get().codes.find((c) => c.email === email),
-
-  removeCode: (email) =>
+  addCode: (code) =>
     set((state) => ({
-      codes: state.codes.filter((c) => c.email !== email),
+      codes: [...state.codes, { id: crypto.randomUUID(), ...code }],
+    })),
+
+  removeCode: (id) =>
+    set((state) => ({
+      codes: state.codes.filter((c) => c.id !== id),
+    })),
+
+  updateCodeStatus: (id, newStatus) =>
+    set((state) => ({
+      codes: state.codes.map((c) =>
+        c.id === id ? { ...c, status: newStatus } : c
+      ),
     })),
 }));

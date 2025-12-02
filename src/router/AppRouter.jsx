@@ -14,10 +14,10 @@ import { GetServices } from "../pages/public/GetServices.jsx";
 import { LoginPage } from "../pages/admin/LoginPage.jsx";
 import { DashboardPage } from "../pages/admin/DashboardPage.jsx";
 import { PendingActivationPage } from "../pages/admin/PendingActivationPage.jsx";
-
+import {CodesAdmin} from "../pages/admin/InputCode.jsx";
 import { ClientPage } from "../pages/admin/ClientsPage.jsx";
 import { MailboxConfigPage } from "../pages/admin/MailboxConfigPage.jsx";
-import { LogsPage } from "../pages/admin/LogsPage.jsx";
+import { CodesList } from "../pages/admin/CodeList.jsx";
 
 // Protected Route
 import { ProtectedRoute } from "../component/ProtectedRoute.jsx";
@@ -46,6 +46,7 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/activaciones"
           element={
@@ -54,6 +55,7 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/clients"
           element={
@@ -62,6 +64,7 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/correo"
           element={
@@ -70,14 +73,25 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
+
         <Route
-          path="/admin/logs"
+          path="/admin/codes"
           element={
             <ProtectedRoute>
-              <LogsPage />
+              <CodesAdmin />
             </ProtectedRoute>
           }
         />
+
+       <Route
+          path="/admin/codelist"
+          element={
+            <ProtectedRoute>
+              <CodesList />
+            </ProtectedRoute>
+          }
+        />
+
       </Route>
     </Routes>
   );
