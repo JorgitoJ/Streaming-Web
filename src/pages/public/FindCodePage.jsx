@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Card, ModalCard } from "../../component/Cards";
-import { useCodesStore } from "../../store/usecodesStore";
+import { ModalCard, Card } from "../../component/Cards";
+import { useClientStore } from "../../store/useClientesStore";
 
-export const FindCodePage = () => {
+export const FindAccountPage = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const codes = useCodesStore((state) => state.codes);
-  const addCode = useCodesStore((state) => state.addCode);
+  const clients = useClientStore((state) => state.clients);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     setModalContent(null);
 
@@ -18,7 +17,7 @@ export const FindCodePage = () => {
       setModalContent({
         type: "error",
         title: "Correo inválido",
-        message: "Ingresa un correo válido",
+        message: "Ingresa un correo válido.",
       });
       return;
     }
@@ -28,41 +27,44 @@ export const FindCodePage = () => {
     setTimeout(() => {
       setLoading(false);
 
-      // Buscar código en el store
-      const found = codes.find((c) => c.email === email);
+      const client = clients.find((c) => c.email === email);
 
-      if (found) {
+      if (!client) {
         setModalContent({
-          type: "success",
-          title: "Código encontrado",
-          code: found.code,
-          message: "Tu código de streaming está listo para usar",
+          type: "error",
+          title: "No encontrado",
+          message: "Este correo no tiene ninguna compra registrada.",
         });
-      } else {
-        // Si no existe, generar código de ejemplo y agregar al store
-        const newCode = {
-          email,
-          code: Math.random().toString(36).substring(2, 10).toUpperCase(),
-        };
-        addCode(newCode);
-
-        setModalContent({
-          type: "success",
-          title: "Código generado",
-          code: newCode.code,
-          message: "Se ha generado un nuevo código para este correo",
-        });
+        return;
       }
-    }, 1500);
+
+      if (!client.accountEmail) {
+        setModalContent({
+          type: "info",
+          title: "Pendiente de asignación",
+          message:
+            "Tu cuenta de acceso aún no ha sido asignada. Vuelve a intentar más tarde.",
+        });
+        return;
+      }
+
+      // Cuenta encontrada
+      setModalContent({
+        type: "success",
+        title: "Cuenta encontrada",
+        message: "Este es el correo asignado para acceder al servicio:",
+        code: client.accountEmail,
+      });
+    }, 1000);
   };
 
   const closeModal = () => setModalContent(null);
 
   return (
-    <div className="min-h-screen w-100 mx-auto text-center flex flex-col justify-center relative">
-      <h1 className="text-3xl font-bold mb-3">Buscar Código de Streaming</h1>
-      <p className="text-gray-600 text-sm">
-        Ingresa el correo con el que realizaste la compra para recuperar tu código.
+    <div className="min-h-screen w-full max-w-lg mx-auto text-center flex flex-col justify-center px-4">
+      <h1 className="text-3xl font-bold mb-3">Buscar Cuenta Asignada</h1>
+      <p className="text-gray-600 text-sm mb-6">
+        Ingresa el correo con el que realizaste la compra.
       </p>
 
       <form
@@ -76,11 +78,12 @@ export const FindCodePage = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold shadow-md transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold shadow-md"
         >
-          Buscar Código
+          Buscar Cuenta
         </button>
       </form>
 

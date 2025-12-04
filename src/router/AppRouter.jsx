@@ -6,7 +6,7 @@ import { AdminLayout } from "../layout/AdminLayout";
 
 // Public pages
 import { HomePage } from "../pages/public/HomePage.jsx";
-import { FindCodePage } from "../pages/public/FindCodePage.jsx";
+import { FindAccountPage } from "../pages/public/FindCodePage.jsx";
 import { ActivationStatusPage } from "../pages/public/ActivationStatusPage.jsx";
 import { GetServices } from "../pages/public/GetServices.jsx";
 
@@ -14,10 +14,11 @@ import { GetServices } from "../pages/public/GetServices.jsx";
 import { LoginPage } from "../pages/admin/LoginPage.jsx";
 import { DashboardPage } from "../pages/admin/DashboardPage.jsx";
 import { PendingActivationPage } from "../pages/admin/PendingActivationPage.jsx";
-import {CodesAdmin} from "../pages/admin/InputCode.jsx";
+import { AccountsList } from "../pages/admin/AccountsList.jsx";
+import { AddAccount } from "../pages/admin/AddAccount.jsx";
 import { ClientPage } from "../pages/admin/ClientsPage.jsx";
 import { MailboxConfigPage } from "../pages/admin/MailboxConfigPage.jsx";
-import { CodesList } from "../pages/admin/CodeList.jsx";
+import { AssignAccount } from "../pages/admin/AsingAccount.jsx";
 
 // Protected Route
 import { ProtectedRoute } from "../component/ProtectedRoute.jsx";
@@ -28,7 +29,7 @@ export default function AppRouter() {
       {/* Rutas públicas */}
       <Route element={<PublicLayout />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/buscar-codigo" element={<FindCodePage />} />
+        <Route path="/buscar-codigo" element={<FindAccountPage />} />
         <Route path="/activacion" element={<ActivationStatusPage />} />
         <Route path="/servicio" element={<GetServices/>} />
       </Route>
@@ -75,19 +76,26 @@ export default function AppRouter() {
         />
 
         <Route
-          path="/admin/codes"
+          path="/admin/accounts"
           element={
             <ProtectedRoute>
-              <CodesAdmin />
+              <AccountsList />
             </ProtectedRoute>
           }
         />
-
-       <Route
-          path="/admin/codelist"
+        <Route
+          path="/admin/addaccounts"
           element={
             <ProtectedRoute>
-              <CodesList />
+              <AddAccount />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/assingaccounts"
+          element={
+            <ProtectedRoute>
+              <AssignAccount />
             </ProtectedRoute>
           }
         />

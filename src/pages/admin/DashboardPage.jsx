@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { useActivacionesStore } from "../../store/useActivacionesStore";
-import { useCodesStore } from "../../store/usecodesStore";
+import { AddAccount } from "../../pages/admin/AddAccount.jsx";
 
 export const DashboardPage = () => {
   const activaciones = useActivacionesStore((state) => state.activaciones);
-  const codes = useCodesStore((state) => state.codes);
+  const codes = AddAccount((state) => state.codes);
 
   const chartData = useMemo(() => {
     // Generamos datos de activaciones por día para el gráfico

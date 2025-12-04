@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useServiciosStore } from "../../store/useServiciosStore";
+import { useServiceStore } from "../../store/useServiciosStore";
 
 export const GetServices = () => {
   const [nombre, setNombre] = useState("");
@@ -9,7 +9,7 @@ export const GetServices = () => {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
 
-  const addSolicitud = useServiciosStore((state) => state.addSolicitud);
+  const addSolicitud = useServiceStore((state) => state.addSolicitud);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,89 +1,37 @@
-import { useState } from "react";
-import { useServiciosStore } from "../../store/useServiciosStore";
-import { useCodesStore } from "../../store/usecodesStore";
+import { useClientStore } from "../../store/useClientesStore";
 
 export const ClientPage = () => {
-  const solicitudes = useServiciosStore((state) => state.solicitudes);
-  const updateSolicitud = useServiciosStore((state) => state.updateSolicitud);
-  const addCode = useCodesStore((state) => state.addCode);
-
-  const [codigoInput, setCodigoInput] = useState({}); // código temporal por solicitud
-
-  const handleAsignarCodigo = (solicitud) => {
-    if (!codigoInput[solicitud.id]) return;
-
-    // Actualizar solicitud
-    updateSolicitud(solicitud.id, {
-      codigoAsignado: codigoInput[solicitud.id],
-      estado: "aprobado",
-    });
-
-    // Agregar al store de códigos
-    addCode({
-      email: solicitud.email,
-      code: codigoInput[solicitud.id],
-      status: "activo",
-    });
-
-    setCodigoInput((prev) => ({ ...prev, [solicitud.id]: "" }));
-  };
+  const clients = useClientStore((s) => s.clients);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-6">Solicitudes de Servicio</h1>
+    <div className="p-6 w-full">
+      <h2 className="text-2xl font-bold mb-4">Clientes</h2>
 
-      <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-        <thead className="bg-blue-600 text-white">
-          <tr>
-            <th className="p-3 text-left">Nombre</th>
-            <th className="p-3 text-left">Email</th>
-            <th className="p-3 text-left">Teléfono</th>
-            <th className="p-3 text-left">Servicio</th>
-            <th className="p-3 text-left">Estado</th>
-            <th className="p-3 text-left">Código</th>
-            <th className="p-3 text-left">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {solicitudes.map((s) => (
-            <tr key={s.id} className="border-b">
-              <td className="p-3">{s.nombre}</td>
-              <td className="p-3">{s.email}</td>
-              <td className="p-3">{s.telefono}</td>
-              <td className="p-3">{s.servicio}</td>
-              <td className="p-3 capitalize">{s.estado}</td>
-              <td className="p-3">
-                {s.codigoAsignado ? (
-                  s.codigoAsignado
-                ) : (
-                  <input
-                    type="text"
-                    placeholder="Asignar código"
-                    value={codigoInput[s.id] || ""}
-                    onChange={(e) =>
-                      setCodigoInput((prev) => ({
-                        ...prev,
-                        [s.id]: e.target.value,
-                      }))
-                    }
-                    className="px-2 py-1 border rounded"
-                  />
-                )}
-              </td>
-              <td className="p-3">
-                {!s.codigoAsignado && (
-                  <button
-                    onClick={() => handleAsignarCodigo(s)}
-                    className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
-                  >
-                    Asignar
-                  </button>
-                )}
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full border rounded">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 text-left">Nombre</th>
+              <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-left">Teléfono</th>
+              <th className="p-3 text-left">Servicio</th>
+              <th className="p-3 text-left">Correo asignado</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {clients.map((c) => (
+              <tr key={c.id} className="border-t">
+                <td className="p-3">{c.name}</td>
+                <td className="p-3">{c.email}</td>
+                <td className="p-3">{c.phone}</td>
+                <td className="p-3">{c.service}</td>
+                <td className="p-3">{c.accountEmail ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

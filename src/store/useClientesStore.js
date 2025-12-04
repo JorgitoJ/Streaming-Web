@@ -1,20 +1,30 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
-export const useClientesStore = create((set) => ({
-  clientes: [],
+export const useClientStore = create((set) => ({
+  clients: [],
 
-  addCliente: (cliente) =>
-    set((state) => ({ clientes: [...state.clientes, cliente] })),
-
-  assignCodigo: (clienteId, codigo) =>
+  addClient: (client) =>
     set((state) => ({
-      clientes: state.clientes.map((c) =>
-        c.id === clienteId ? { ...c, codigo } : c
-      ),
+      clients: [
+        ...state.clients,
+        {
+          id: crypto.randomUUID(),
+          name: client.name,
+          email: client.email,
+          phone: client.phone,
+          service: client.service,
+          assignedEmail: null, // aquí va la cuenta Netflix/Disney etc.
+        },
+      ],
     })),
 
-  removeCliente: (clienteId) =>
+  setClients: (clients) => set({ clients }),
+
+  // Guardar el email asignado
+  assignEmail: (clientId, emailObj) =>
     set((state) => ({
-      clientes: state.clientes.filter((c) => c.id !== clienteId),
+      clients: state.clients.map((c) =>
+        c.id === clientId ? { ...c, assignedEmail: emailObj } : c
+      ),
     })),
 }));

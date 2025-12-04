@@ -46,11 +46,14 @@ export const AdminLayout = () => {
           <Link className="hover:text-blue-600" to="/admin/correo">
             Config Buzón
           </Link>
-          <Link className="hover:text-blue-600" to="/admin/codes">
-            Códigos
+          <Link className="hover:text-blue-600" to="/admin/accounts">
+            Listado de Cuentas
           </Link>
-          <Link className="hover:text-blue-600" to="/admin/codelist">
-            Listado de Códigos
+          <Link className="hover:text-blue-600" to="/admin/addaccounts">
+            Añadir Cuentas
+          </Link>
+          <Link className="hover:text-blue-600" to="/admin/assingaccounts">
+            Asignar Cuentas
           </Link>
         </nav>
 
